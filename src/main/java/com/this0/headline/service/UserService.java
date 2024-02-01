@@ -2,6 +2,7 @@ package com.this0.headline.service;
 
 import com.this0.headline.pojo.User;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.this0.headline.util.Result;
 
 /**
 * @author yupen
@@ -10,4 +11,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface UserService extends IService<User> {
 
+    Result login(User user);
 }

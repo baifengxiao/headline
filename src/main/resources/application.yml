@@ -5,11 +5,11 @@ spring:
     druid:
       url: jdbc:mysql://42.194.239.199:10241/sm_db
       username: root
-      password: root
+      password: Ypt1024mysql
       driver-class-name: com.mysql.cj.jdbc.Driver
 # mybatis-plus的配置
 mybatis-plus:
-  type-aliases-package: com.atguigu.pojo
+  type-aliases-package: com.this0.pojo
   global-config:
     db-config:
       logic-delete-field: isDeleted  #全局逻辑删除
