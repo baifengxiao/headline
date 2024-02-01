@@ -12,4 +12,6 @@ import com.this0.headline.util.Result;
 public interface UserService extends IService<User> {
 
     Result login(User user);
+
+    Result getUserInfo(String token);
 }

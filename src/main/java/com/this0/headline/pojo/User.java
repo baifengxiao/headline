@@ -10,6 +10,8 @@ import lombok.Data;
  */
 @Data
 public class User implements Serializable {
+
+    @TableId
     private Long uid;
 
     private String username;

@@ -7,8 +7,7 @@ package com.this0.headline.util;
 public enum ResultCodeEnum {
 
     SUCCESS(200,"success"),
-    USERNAME_ERROR(501,"usernameError"),
-    PASSWORD_ERROR(503,"passwordError"),
+    LOGIN_ERROR(501,"usernameErrororPasswdError"),
     NOTLOGIN(504,"notLogin"),
     USERNAME_USED(505,"userNameUsed");
 

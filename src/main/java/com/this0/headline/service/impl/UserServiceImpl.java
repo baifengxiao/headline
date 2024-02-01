@@ -1,7 +1,5 @@
 package com.this0.headline.service.impl;
 
-import com.alibaba.druid.util.StringUtils;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.this0.headline.pojo.User;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author yupen
@@ -36,12 +33,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result login(User user) {
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        //TODO，没输入用户或密码那种情况没有处理
         queryWrapper.eq("username", user.getUsername()).eq("user_pwd", MD5Util.encrypt(user.getUserPwd()));
         User userlogin = userMapper.selectOne(queryWrapper);
 
         Long uid = (userlogin != null) ? userlogin.getUid() : null;
-
 
         HashMap<String, Object> map = new HashMap<>();
 
@@ -49,8 +44,24 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             String token = jwtHelper.createToken(uid);
             map.put("token", token);
         } else {
-            return Result.build(504, ResultCodeEnum.NOTLOGIN);
+            return Result.build(null, ResultCodeEnum.LOGIN_ERROR);
         }
+
+        return Result.ok(map);
+    }
+
+    @Override
+    public Result getUserInfo(String token) {
+
+        if (jwtHelper.isExpiration(token)){
+            return Result.build(null,ResultCodeEnum.NOTLOGIN);
+        }
+
+        Long userId = jwtHelper.getUserId(token);
+        User user = baseMapper.selectById(userId);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("loginUser",user);
 
         return Result.ok(map);
     }
