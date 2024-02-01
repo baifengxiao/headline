@@ -31,4 +31,9 @@ public class UserController {
         Result result = userService.checkUserName(username);
         return result;
     }
+    @PostMapping("/regist")
+    public Result Regist(@RequestBody User user){
+        Result result = userService.regest(user);
+        return result;
+    }
 }

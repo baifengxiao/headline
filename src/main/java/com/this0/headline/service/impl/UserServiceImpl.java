@@ -70,9 +70,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result checkUserName(String username) {
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("username",username);
+        wrapper.eq("username", username);
         User user = userMapper.selectOne(wrapper);
-        if (user!=null) {
+        if (user != null) {
             System.out.println("不能注册");
             return Result.build(null, ResultCodeEnum.USERNAME_USED);
 
@@ -80,6 +80,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             System.out.println("可以注册");
             return Result.ok(null);
         }
+
+    }
+
+    @Override
+    public Result regest(User user) {
+
+        Result result = checkUserName(user.getUsername());
+        if (result.getCode() == 200) {
+            int insert = userMapper.insert(user);
+            return Result.ok(null);
+
+        } else return Result.build(null, ResultCodeEnum.USERNAME_USED);
 
     }
 }
