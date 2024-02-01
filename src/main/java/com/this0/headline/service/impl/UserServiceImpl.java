@@ -11,6 +11,7 @@ import com.this0.headline.util.Result;
 import com.this0.headline.util.ResultCodeEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 
@@ -53,17 +54,33 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public Result getUserInfo(String token) {
 
-        if (jwtHelper.isExpiration(token)){
-            return Result.build(null,ResultCodeEnum.NOTLOGIN);
+        if (jwtHelper.isExpiration(token)) {
+            return Result.build(null, ResultCodeEnum.NOTLOGIN);
         }
 
         Long userId = jwtHelper.getUserId(token);
         User user = baseMapper.selectById(userId);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("loginUser",user);
+        map.put("loginUser", user);
 
         return Result.ok(map);
+    }
+
+    @Override
+    public Result checkUserName(String username) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username",username);
+        User user = userMapper.selectOne(wrapper);
+        if (user!=null) {
+            System.out.println("不能注册");
+            return Result.build(null, ResultCodeEnum.USERNAME_USED);
+
+        } else {
+            System.out.println("可以注册");
+            return Result.ok(null);
+        }
+
     }
 }
 
