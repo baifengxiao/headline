@@ -19,9 +19,5 @@ public class TypeController {
         return result;
     }
 
-    @PostMapping("/findNewsPage")
-    public Result findNewsPage(@RequestBody Type type) {
-        Result result = typeService.findNewsPage(type);
-        return result;
-    }
+
 }

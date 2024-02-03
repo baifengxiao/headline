@@ -2,6 +2,8 @@ package com.this0.headline.service;
 
 import com.this0.headline.pojo.Headline;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.this0.headline.pojo.dto.NewsDto;
+import com.this0.headline.util.Result;
 
 /**
 * @author yupen
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface HeadlineService extends IService<Headline> {
 
+    Result findNewsPage(NewsDto newsDto);
 }

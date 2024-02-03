@@ -1,7 +1,13 @@
 package com.this0.headline.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.this0.headline.pojo.Headline;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.this0.headline.pojo.dto.NewsDto;
+import com.this0.headline.pojo.vo.NewsVo;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
 * @author yupen
@@ -11,6 +17,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 */
 public interface HeadlineMapper extends BaseMapper<Headline> {
 
+    List<NewsVo> selectNoPage(@Param("newsDto") NewsDto newsDto, @Param("newsVoPage") IPage newsVoPage);
 }
 
 

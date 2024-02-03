@@ -18,9 +18,18 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        hid,title,article,
+        hid
+        ,title,article,
         type,publisher,page_views,
         create_time,update_time,version,
         is_deleted
     </sql>
+
+    <select id="selectNoPage" resultType="com.this0.headline.pojo.vo.NewsVo">
+        select hid
+                ,title,
+               type,page_views,
+               TIMESTAMPDIFF(HOUR,create_time,NOW()) pastHours,publisher from news_headline
+        where title like concat('%', #{newsDto.keyWords}, '%') and type = #{newsDto.type}
+    </select>
 </mapper>
