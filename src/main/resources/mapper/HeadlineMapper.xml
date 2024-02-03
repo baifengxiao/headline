@@ -25,7 +25,7 @@
         is_deleted
     </sql>
 
-    <select id="selectNoPage" resultType="com.this0.headline.pojo.vo.NewsVo">
+    <select id="selectMyPage" resultType="com.this0.headline.pojo.Headline">
         select hid
                 ,title,
                type,page_views,

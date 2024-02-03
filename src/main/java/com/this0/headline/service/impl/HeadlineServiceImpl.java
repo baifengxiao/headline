@@ -1,19 +1,19 @@
 package com.this0.headline.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.this0.headline.pojo.Headline;
 import com.this0.headline.pojo.dto.NewsDto;
 import com.this0.headline.pojo.vo.NewsVo;
+
 import com.this0.headline.service.HeadlineService;
 import com.this0.headline.mapper.HeadlineMapper;
 import com.this0.headline.util.Result;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.HashMap;
 
 /**
 * @author yupen
@@ -28,16 +28,26 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline> i
     @Override
     public Result findNewsPage(NewsDto newsDto) {
 
-//        再分页
+//        分页参数
         Page<NewsVo> newsVoPage = new Page<>(newsDto.getPageNum(), newsDto.getPageSize());
 
-//        先查
-        List<NewsVo> voList = headlineMapper.selectNoPage(newsDto, newsVoPage);
+//        查
+        IPage<Headline> selectedNoPage = headlineMapper.selectMyPage(newsVoPage,newsDto );
 
-        System.out.println("list = " + voList);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("pageData",selectedNoPage.getRecords());
+        map.put("pageNum",selectedNoPage.getCurrent());
+        map.put("pageSize",selectedNoPage.getSize());
+        map.put("totalSize",selectedNoPage.getTotal());
+        map.put("totalPage",selectedNoPage.getPages());
 
-        return Result.ok(voList);
+        HashMap<Object, Object> pageInfo = new HashMap<>();
+        pageInfo.put("pageInfo",map);
+
+        return Result.ok(pageInfo);
     }
+
+
 }
 
 

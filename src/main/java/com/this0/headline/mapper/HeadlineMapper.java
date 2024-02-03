@@ -7,8 +7,6 @@ import com.this0.headline.pojo.dto.NewsDto;
 import com.this0.headline.pojo.vo.NewsVo;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 /**
 * @author yupen
 * @description 针对表【news_headline】的数据库操作Mapper
@@ -17,7 +15,8 @@ import java.util.List;
 */
 public interface HeadlineMapper extends BaseMapper<Headline> {
 
-    List<NewsVo> selectNoPage(@Param("newsDto") NewsDto newsDto, @Param("newsVoPage") IPage newsVoPage);
+    IPage<Headline> selectMyPage(IPage<NewsVo> newsVoPage, @Param("newsDto") NewsDto newsDto);
+
 }
 
 
