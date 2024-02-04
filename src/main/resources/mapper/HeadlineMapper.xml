@@ -26,10 +26,18 @@
     </sql>
 
     <select id="selectMyPage" resultType="com.this0.headline.pojo.Headline">
-        select hid
-                ,title,
-               type,page_views,
-               TIMESTAMPDIFF(HOUR,create_time,NOW()) pastHours,publisher from news_headline
-        where title like concat('%', #{newsDto.keyWords}, '%') and type = #{newsDto.type}
+        select hid,
+               title,
+               type,
+               page_views,
+               TIMESTAMPDIFF(HOUR,create_time, NOW()) pastHours,
+               publisher
+        from news_headline
+        where title like concat('%', #{newsDto.keyWords}, '%')
+          and type = #{newsDto.type}
+    </select>
+    <select id="selectDetail" resultType="map">
+select hid,title,article,type,page_views pageViews,publisher,username author,TIMESTAMPDIFF(HOUR,create_time,NOW()) pastHours,
+tname typeName from news_headline h left join news_type t on h.type=t.tid left join news_user u on u.uid=h.publisher where hid=#{hid}
     </select>
 </mapper>

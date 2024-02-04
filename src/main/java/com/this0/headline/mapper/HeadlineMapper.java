@@ -7,6 +7,8 @@ import com.this0.headline.pojo.dto.NewsDto;
 import com.this0.headline.pojo.vo.NewsVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Map;
+
 /**
 * @author yupen
 * @description 针对表【news_headline】的数据库操作Mapper
@@ -17,6 +19,7 @@ public interface HeadlineMapper extends BaseMapper<Headline> {
 
     IPage<Headline> selectMyPage(IPage<NewsVo> newsVoPage, @Param("newsDto") NewsDto newsDto);
 
+    Map selectDetail(Integer hid);
 }
 
 

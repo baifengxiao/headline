@@ -22,4 +22,9 @@ public class NewsPage {
         Result result = headlineService.findNewsPage(newsDto);
         return result;
     }
+    @PostMapping("/showHeadlineDetail")
+    public Result showHeadlineDetail(Integer hid){
+        Result result = headlineService.showHeadlineDetail(hid);
+        return result;
+    }
 }

@@ -13,4 +13,6 @@ import com.this0.headline.util.Result;
 public interface HeadlineService extends IService<Headline> {
 
     Result findNewsPage(NewsDto newsDto);
+
+    Result showHeadlineDetail(Integer hid);
 }
