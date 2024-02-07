@@ -3,6 +3,7 @@ package com.this0.headline.pojo;
 import com.baomidou.mybatisplus.annotation.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Data;
 
@@ -25,9 +26,9 @@ public class Headline implements Serializable {
 
     private Integer pageViews;
 
-    private Date createTime;
+    private LocalDateTime createTime;
 
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     @Version
     private Integer version;

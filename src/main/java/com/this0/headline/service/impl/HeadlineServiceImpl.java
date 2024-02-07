@@ -10,11 +10,16 @@ import com.this0.headline.pojo.vo.NewsVo;
 
 import com.this0.headline.service.HeadlineService;
 import com.this0.headline.mapper.HeadlineMapper;
+import com.this0.headline.util.JwtHelper;
 import com.this0.headline.util.Result;
+import com.this0.headline.util.ResultCodeEnum;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +33,10 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline> i
 
     @Resource
     private HeadlineMapper headlineMapper;
+
+
+    @Resource
+    private JwtHelper jwtHelper;
 
     @Override
     public Result findNewsPage(NewsDto newsDto) {
@@ -63,15 +72,30 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline> i
 
         System.out.println("detail.get(\"page_views\").getClass() = " + detail.get("pageViews").getClass());
         //上一句输出：detail.get("page_views").getClass() = class java.lang.Integer，
-        int i = (Integer)detail.get("pageViews") + 1;   //TODO,detail.get("page_views")它本身就是Integer类型，为什么还要把她强转成Integer
+        int i = (Integer) detail.get("pageViews") + 1;   //TODO,detail.get("page_views")它本身就是Integer类型，为什么还要把她强转成Integer
         newHeadline.setPageViews(i);
 
         baseMapper.updateById(newHeadline);
 
         HashMap<Object, Object> map = new HashMap<>();
-        map.put("headline",detail);
+        map.put("headline", detail);
 
         return Result.ok(map);
+    }
+
+    @Override
+    public Result publish(String token, Headline headline) {
+
+
+        headline.setPublisher(jwtHelper.getUserId(token).intValue());
+
+        headline.setCreateTime( LocalDateTime.now());
+        headline.setUpdateTime( LocalDateTime.now());
+        headline.setPublisher(jwtHelper.getUserId(token).intValue());
+
+        headlineMapper.insert(headline);
+
+        return Result.ok(null);
     }
 
 
