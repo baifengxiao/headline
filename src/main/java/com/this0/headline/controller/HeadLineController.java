@@ -25,6 +25,24 @@ public class HeadLineController {
 
             return Result.ok(result);
     }
+
+    @PostMapping("findHeadlineByHid")
+    public Result findHeadlineByHid(String hid){
+        Result result= headlineService.findHeadlineByHid(hid);
+        return result;
+    }
+
+    @PostMapping("/update")
+    public Result update(@RequestBody Headline headline){
+        Result result= headlineService.updateHeadline(headline);
+        return Result.ok(result);
+    }
+
+    @PostMapping("/removeByHid")
+    public Result removeByHid(String hid ) {
+        Result result = headlineService.removeByHid(hid);
+        return Result.ok(result);
+    }
 }
 
 

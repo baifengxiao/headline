@@ -89,12 +89,37 @@ public class HeadlineServiceImpl extends ServiceImpl<HeadlineMapper, Headline> i
 
         headline.setPublisher(jwtHelper.getUserId(token).intValue());
 
-        headline.setCreateTime( LocalDateTime.now());
-        headline.setUpdateTime( LocalDateTime.now());
+        headline.setCreateTime(LocalDateTime.now());
+        headline.setUpdateTime(LocalDateTime.now());
         headline.setPublisher(jwtHelper.getUserId(token).intValue());
 
         headlineMapper.insert(headline);
 
+        return Result.ok(null);
+    }
+
+    @Override
+    public Result findHeadlineByHid(String hid) {
+        Headline headline = headlineMapper.selectById(hid);
+        HashMap<String, Object> headlinemap = new HashMap<>();
+        headlinemap.put("headline", headline);
+
+        return Result.ok(headlinemap);
+    }
+
+    @Override
+    public Result updateHeadline(Headline headline) {
+        Integer version = headlineMapper.selectById(headline).getVersion();
+        headline.setVersion(version);
+        headline.setUpdateTime(LocalDateTime.now());
+
+        headlineMapper.updateById(headline);
+        return Result.ok(null);
+    }
+
+    @Override
+    public Result removeByHid(String hid) {
+        headlineMapper.deleteById(hid);
         return Result.ok(null);
     }
 
